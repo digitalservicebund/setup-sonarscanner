@@ -1,0 +1,19 @@
+name: "Setup SonarScanner"
+description: "Sets up SonarScanner CLI for Linux in your GitHub Actions workflow."
+
+inputs:
+  version:
+    required: false
+    default: "5.0.1.3006"
+    description: "SonarScanner CLI version to install"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install SonarScanner
+      shell: bash
+      run: |
+        set -eu
+        curl -LO https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${{ inputs.version }}-linux.zip
+        unzip sonar-scanner-cli-${{ inputs.version }}-linux.zip
+        echo $GITHUB_WORKSPACE/sonar-scanner-${{ inputs.version }}-linux/bin >> $GITHUB_PATH
